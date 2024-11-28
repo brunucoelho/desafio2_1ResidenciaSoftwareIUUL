@@ -1,6 +1,8 @@
 const prompt = require('prompt-sync')();
 const getExchangeRate = require('./exchangeRate'); // Importa a função
 
+const getExchangeRate = require('./exchangeRate'); // Importa a função
+
 async function main() {
     console.log("=== Conversor de Moedas ===\n");
 
@@ -37,7 +39,14 @@ async function main() {
             console.error("O valor deve ser maior que zero. Tente novamente.");
             continue;
         }
+        if (isNaN(amount) || amount <= 0) {
+            console.error("O valor deve ser maior que zero. Tente novamente.");
+            continue;
+        }
 
+        try {
+            console.log("\nBuscando taxas de câmbio...");
+            const exchangeRate = await getExchangeRate(baseCurrency, targetCurrency);
         try {
             console.log("\nBuscando taxas de câmbio...");
             const exchangeRate = await getExchangeRate(baseCurrency, targetCurrency);
@@ -52,7 +61,7 @@ async function main() {
 
         console.log("\n---\n");
     }
-}
+}}
 
 // Executa o programa
 if (require.main === module) {
